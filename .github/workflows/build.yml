@@ -1,0 +1,34 @@
+name: Build Diting Kernel
+
+on:
+  push:
+    branches: [bsp-diting-s-oss]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y build-essential bison flex libelf-dev bc python3
+
+      - name: Download GCC toolchain
+        run: |
+          git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9 gcc
+          echo "PATH=$PATH:${GITHUB_WORKSPACE}/gcc/bin" >> $GITHUB_ENV
+
+      - name: Build kernel
+        run: |
+          export ARCH=arm64
+          export CROSS_COMPILE=aarch64-linux-android-
+          make gki_defconfig
+          make -j$(nproc)
+
+      - name: Upload kernel image
+        uses: actions/upload-artifact@v4
+        with:
+          name: Kernel-Image
+          path: arch/arm64/boot/
