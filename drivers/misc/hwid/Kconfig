@@ -1,0 +1,4 @@
+config MISC_HWID
+    bool "Xiaomi HWID support"
+    default y
+    depends on MISC
