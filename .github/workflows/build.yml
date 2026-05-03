@@ -2,7 +2,7 @@ name: Build Diting Kernel
 
 on:
   push:
-    branches: [bsp-diting-s-oss]
+    branches: [yhys233-patch-1]
 
 jobs:
   build:
