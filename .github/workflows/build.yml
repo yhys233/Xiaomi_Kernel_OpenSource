@@ -2,7 +2,7 @@ name: Build Diting Kernel
 
 on:
   push:
-    branches: [yhys233-patch-11]
+    branches: [yhys233-patch-1]
 
 jobs:
   build:
